@@ -9,7 +9,9 @@ RSpec.describe "chefs show page" do
     @ingrediant3 = Ingredient.create!(name: "ingrediant3", calories: 3)
     @dish1 = Dish.create!(name: "dish1", description: "this is dish 1", chef_id: @chef1.id)
     @dish2 = Dish.create!(name: "dish2", description: "this is dish 2", chef_id: @chef2.id)
-    @dish1ingrediants = DishIngredient.create!(dish_id: @dish1.id, ingredient_id: @ingrediant1.id)
+    @dish1ingrediant1 = DishIngredient.create!(dish_id: @dish1.id, ingredient_id: @ingrediant1.id)
+    @dish1ingrediant2 = DishIngredient.create!(dish_id: @dish1.id, ingredient_id: @ingrediant2.id)
+    @dish1ingrediant3 = DishIngredient.create!(dish_id: @dish1.id, ingredient_id: @ingrediant3.id)
   end
   describe "story 2" do
 #     As a visitor
@@ -31,12 +33,36 @@ RSpec.describe "chefs show page" do
       
       fill_in 'Dish', with: @dish2.id
       click_button 'Save'
-
+      
       save_and_open_page
-
+      
       expect(page).to have_content(@dish2.name)
-
+      
     end
     it 'when i fill the form in with an id of a dish and click submit im taken back to the chefs show page with the new item on the page'
+  end
+  
+  describe "story 3" do 
+    # As a visitor
+    # When I visit a chef's show page
+    # I see a link to view a list of all ingredients that this chef uses in their dishes.
+    # When I click on that link
+    # I'm taken to a chef's ingredients index page
+    # and I can see a unique list of names of all the ingredients that this chef uses.
+    it 'has a link view all ingredients that the chef uses' do
+      visit "/chefs/#{@chef1.id}"
+      
+      expect(page).to have_link("chefs ingredients")
+    end
+    it 'takes me to the chefs ingredients show page' do
+      visit "/chefs/#{@chef1.id}"
+      # save_and_open_page
+      click_on("chefs ingredients")
+       save_and_open_page
+
+      expect(page).to have_current_path("/chefs/#{@chef1.id}/ingredients")
+      expect(page).to have_content(@ingrediant1.name)
+      expect(page).to have_content(@ingrediant1.name)
+    end
   end
 end

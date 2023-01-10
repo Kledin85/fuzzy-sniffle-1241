@@ -4,9 +4,11 @@
 <% end%>
 
 <h1>add dish</h1>
-<%= form_with url: chefs_path, post: :patch, local: true do |f| %>
+<%= form_with url: "/chefs/#{@chef.id}", method: :patch, local: true do |f| %>
   <%= f.label :dish_id %>
   <%= f.number_field :dish_id %>
 
   <%= f.submit %>
 <% end %>
+
+<%= link_to "chefs ingredients", "/chefs/#{@chef.id}/ingredients"%>

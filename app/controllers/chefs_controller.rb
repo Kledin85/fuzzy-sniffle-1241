@@ -7,4 +7,8 @@ class ChefsController < ApplicationController
     @chef = Chef.find(params[:id])
     redirect_to "chef/#{@chef.id}"
   end
+  
+  def ingredients
+    @chef = Chef.find(params[:id])
+  end
 end
