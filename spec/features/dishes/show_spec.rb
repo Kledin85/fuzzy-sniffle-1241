@@ -25,7 +25,6 @@ RSpec.describe "show page" do
     end
     it 'shows a list of ingredients and total calorie count' do
       visit "dishes/#{@dish1.id}"
-      save_and_open_page
       expect(page).to have_content(@ingrediant1.name)
       expect(page).to have_content(@ingrediant1.calories)
     end
